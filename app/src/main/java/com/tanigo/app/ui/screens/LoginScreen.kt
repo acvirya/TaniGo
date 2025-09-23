@@ -37,13 +37,27 @@ fun LoginScreen(navController: NavController){
         modifier = Modifier.fillMaxSize().padding(horizontal = Dimens.screenHorizontal)
     ){
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize()
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
+            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.weight(0.4f))
+
             BrandHeader()
-            Spacer(modifier = Modifier.height(Dimens.spacingMedium))
+
+            Spacer(modifier = Modifier.height(60.dp))
+
+            Text(
+                text = "Login",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.tertiary,
+            )
+
             LoginForm()
+            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(60.dp))
         }
 
     }
@@ -92,7 +106,7 @@ fun LoginForm(){
         singleLine = true,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = Dimens.spacingExtraSmall),
+            .padding(top = Dimens.spacingMedium),
         shape = Shapes.medium
     )
     OutlinedTextField(
