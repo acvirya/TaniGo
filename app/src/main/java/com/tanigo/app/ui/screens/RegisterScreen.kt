@@ -34,7 +34,7 @@ import com.tanigo.app.ui.theme.Shapes
 import com.tanigo.app.ui.components.BrandHeader
 
 @Composable
-fun LoginScreen(navController: NavController){
+fun RegisterScreen(navController: NavController){
     Surface(
         modifier = Modifier.fillMaxSize().padding(horizontal = Dimens.screenHorizontal)
     ){
@@ -52,12 +52,12 @@ fun LoginScreen(navController: NavController){
             Spacer(modifier = Modifier.height(60.dp))
 
             Text(
-                text = "Login",
+                text = "Register",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.tertiary,
             )
 
-            LoginForm(navController)
+            RegisterForm(navController)
             Spacer(modifier = Modifier.weight(1f))
             Spacer(modifier = Modifier.height(60.dp))
         }
@@ -66,9 +66,10 @@ fun LoginScreen(navController: NavController){
 }
 
 @Composable
-fun LoginForm(navController: NavController){
+fun RegisterForm(navController: NavController){
     var text by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
     var visible by remember { mutableStateOf(false) }
 
     OutlinedTextField(
@@ -83,8 +84,37 @@ fun LoginForm(navController: NavController){
         shape = Shapes.medium
     )
     OutlinedTextField(
+        value = text,
+        onValueChange = { text = it },
+        label = { Text("Email") },
+        placeholder = { Text("Enter your email") },
+        singleLine = true,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = Dimens.spacingExtraSmall),
+        shape = Shapes.medium
+    )
+    OutlinedTextField(
         value = password,
         onValueChange = { password = it },
+        label = { Text(text="Password",) },
+        singleLine = true,
+        visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
+        trailingIcon = {
+            val image = if (visible) Icons.Default.Visibility else Icons.Default.VisibilityOff
+            IconButton(onClick = { visible = !visible }, Modifier.padding(end=Dimens.spacingExtraSmall)) {
+                Icon(image, contentDescription = if (visible) "Hide" else "Show")
+            }
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = Dimens.spacingExtraSmall),
+        shape = Shapes.medium
+    )
+
+    OutlinedTextField(
+        value = confirmPassword,
+        onValueChange = { confirmPassword = it },
         label = { Text(text="Password",) },
         singleLine = true,
         visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -108,7 +138,7 @@ fun LoginForm(navController: NavController){
             .height(Dimens.buttonHeightMedium),
         shape = Shapes.medium
     ) {
-        Text("Login")
+        Text("Register")
     }
 
 
@@ -120,17 +150,17 @@ fun LoginForm(navController: NavController){
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            text = "Don't have an account? ",
+            text = "Already have an account? ",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.tertiary
         )
 
         Text(
-            text = "Register",
+            text = "Login",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier.clickable {
-                navController.navigate("register")
+                navController.navigate("login")
             }
         )
     }
@@ -139,8 +169,8 @@ fun LoginForm(navController: NavController){
 
 @Preview (showBackground = true, showSystemUi = true)
 @Composable
-fun LoginScreenPreview(){
+fun RegisterScreenPreview(){
     TaniGoTheme {
-        LoginScreen(navController = NavController(LocalContext.current))
+        RegisterScreen(navController = NavController(LocalContext.current))
     }
 }
