@@ -10,7 +10,6 @@ import com.tanigo.app.ui.theme.Dimens
 
 @Composable
 fun HomeScreenExample(navController: NavController) {
-    // Surface utama, warna background dari theme
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -18,7 +17,7 @@ fun HomeScreenExample(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(Dimens.screenHorizontal), // pakai dimens global
+                .padding(Dimens.screenHorizontal),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -28,23 +27,16 @@ fun HomeScreenExample(navController: NavController) {
                 color = MaterialTheme.colorScheme.onSurface
             )
 
-            Spacer(modifier = Modifier.height(Dimens.spacingMedium)) // pakai dimens spacing
+            Spacer(modifier = Modifier.height(Dimens.spacingMedium))
 
             Button(
-                onClick = {
-                    navController.navigate("cart")
-                },
+                onClick = { navController.navigate("product_list") },
                 modifier = Modifier
                     .fillMaxWidth(0.6f)
                     .height(Dimens.buttonHeightMedium)
             ) {
-                Text(
-                    text = "Go to Cart",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
+                Text("Lihat Produk")
             }
         }
     }
 }
-
