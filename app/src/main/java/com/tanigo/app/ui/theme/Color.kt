@@ -17,3 +17,9 @@ val TextSecondary = Color(0xFF757575)   // Abu sedang
 val OnPrimary = Color(0xFFFFFFFF)       // Putih (teks di dalam tombol)
 
 val Error = Color(0xFFF44336)           // Merah
+
+val border = Color(0xFFB7B7B7)  
+
+val Purple500 = Color(0xFF8B63DA)
+val Purple700 = Color(0xFF6F3FBF)
+val Teal200 = Color(0xFF03DAC5)
