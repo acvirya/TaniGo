@@ -1,14 +1,11 @@
 package com.tanigo.app.ui.components
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.*
 import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -16,17 +13,20 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.foundation.layout.size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
+import com.tanigo.app.R
 
-
-data class BottomNavItem(val route: String, val icon: androidx.compose.ui.graphics.vector.ImageVector, val title: String)
+data class BottomNavItem(val route: String, val icon: Int, val title: String)
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
-        BottomNavItem("home", Icons.Filled.Home, "Home"),
-        BottomNavItem("cart", Icons.Filled.ShoppingCart, "Cart"),
-        BottomNavItem("notification", Icons.Filled.Notifications, "Notifications"),
-        BottomNavItem("orderStatus", Icons.AutoMirrored.Filled.List, "Orders")
+        BottomNavItem("home", R.drawable.home, "Home"),
+        BottomNavItem("notification", R.drawable.bell_ringing, "Notifications"),
+        BottomNavItem("cart", R.drawable.shopping_cart, "Cart"),
+        BottomNavItem("orderStatus", R.drawable.clipboard_text, "Orders")
     )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -42,12 +42,16 @@ fun BottomNavigationBar(navController: NavController) {
             val selected = currentRoute == item.route
             NavigationBarItem(
                 icon = {
-                    Icon(
-                        item.icon,
+                    Image(
+                        painter = painterResource(id = item.icon),
                         contentDescription = item.title,
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(32.dp),
+                        colorFilter = ColorFilter.tint(
+                            color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                        )
                     )
                 },
+                label = { Text(text = item.title, color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)) },
                 selected = selected,
                 onClick = {
                     if (currentRoute != item.route) {
@@ -57,10 +61,9 @@ fun BottomNavigationBar(navController: NavController) {
                         }
                     }
                 },
-                alwaysShowLabel = false,
+                alwaysShowLabel = true,
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.primary,
-                    unselectedIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    indicatorColor = Color.Transparent
                 )
             )
         }

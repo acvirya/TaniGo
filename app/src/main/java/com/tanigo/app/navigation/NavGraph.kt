@@ -60,7 +60,7 @@ fun NavGraph() {
             },
             bottomBar = {
                 when (currentRoute) {
-                    "home" -> BottomNavigationBar()
+                    "home" -> BottomNavigationBar(navController)
                     else -> {}
                 }
             },
