@@ -14,11 +14,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.tanigo.app.model.Product
-import com.tanigo.app.viewmodel.ProductViewModel
 import com.tanigo.app.ui.theme.Dimens
-import java.text.NumberFormat
-import java.util.Locale
+import com.tanigo.app.viewmodel.ProductViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductListScreen(
     navController: NavController,
@@ -26,25 +25,29 @@ fun ProductListScreen(
 ) {
     val products = productViewModel.getAllProducts()
 
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Column(modifier = Modifier.padding(Dimens.screenHorizontal)) {
-            Text(
-                text = "Daftar Produk",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Daftar Produk") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                )
             )
-
-            Spacer(modifier = Modifier.height(Dimens.spacingMedium))
-
+        }
+    ) { innerPadding ->
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+            color = MaterialTheme.colorScheme.background
+        ) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(Dimens.spacingSmall),
-                verticalArrangement = Arrangement.spacedBy(Dimens.spacingSmall),
-                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingSmall)
+                contentPadding = PaddingValues(Dimens.spacingMedium),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacingMedium),
+                horizontalArrangement = Arrangement.spacedBy(Dimens.spacingMedium)
             ) {
                 items(products) { product ->
                     ProductGridItemCard(
@@ -66,54 +69,82 @@ fun ProductGridItemCard(
     onAddToCart: () -> Unit,
     onClickDetail: () -> Unit
 ) {
-    val formattedPrice = NumberFormat
-        .getCurrencyInstance(Locale("in", "ID"))
-        .format(product.price)
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .height(260.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = Dimens.elevationSmall)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Column(modifier = Modifier.padding(Dimens.spacingSmall)) {
+        Column {
+            // Foto Produk
             Image(
                 painter = painterResource(id = product.imageRes),
                 contentDescription = product.name,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp),
+                    .height(140.dp),
                 contentScale = ContentScale.Crop
             )
 
             Spacer(modifier = Modifier.height(Dimens.spacingSmall))
 
-            Text(
-                text = product.name,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1
-            )
-            Text(
-                text = formattedPrice,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.primary
-            )
+            // Nama & Harga
+            Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+                Text(
+                    text = product.name,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1
+                )
+                Text(
+                    text = "Rp ${product.price}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
 
             Spacer(modifier = Modifier.height(Dimens.spacingSmall))
 
+            // Tombol Aksi
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
-                OutlinedButton(onClick = onClickDetail) {
-                    Text("Detail")
+                OutlinedButton(
+                    onClick = onClickDetail,
+                    modifier = Modifier
+                        .weight(1f)
+                        .defaultMinSize(minWidth = 70.dp), // biar muat 1 baris
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp) // 🔽 lebih ramping
+                ) {
+                    Text(
+                        text = "Detail",
+                        style = MaterialTheme.typography.labelSmall,
+                        maxLines = 1,
+                        softWrap = false
+                    )
                 }
-                Button(onClick = onAddToCart) {
-                    Text("Tambah")
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Button(
+                    onClick = onAddToCart,
+                    modifier = Modifier
+                        .weight(1f)
+                        .defaultMinSize(minWidth = 70.dp),
+                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp) // 🔽 lebih ramping
+                ) {
+                    Text(
+                        text = "Add",
+                        style = MaterialTheme.typography.labelSmall,
+                        maxLines = 1,
+                        softWrap = false
+                    )
                 }
             }
         }
