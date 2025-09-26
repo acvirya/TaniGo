@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 private val LightColors = lightColorScheme(
     primary = GreenPrimary,
     secondary = OrangeSecondary,
+    tertiary = GreenDark,
     background = Background,
     surface = Surface,
     error = Error,
@@ -16,12 +17,14 @@ private val LightColors = lightColorScheme(
     onSecondary = TextPrimary,
     onBackground = TextPrimary,
     onSurface = TextPrimary,
-    onError = OnPrimary
+    onError = OnPrimary,
+    outline = border,
 )
 
 private val DarkColors = darkColorScheme(
     primary = GreenPrimary,
     secondary = OrangeSecondary,
+    tertiary = GreenDark,
     background = Background,
     surface = Surface,
     error = Error,
@@ -29,7 +32,8 @@ private val DarkColors = darkColorScheme(
     onSecondary = TextPrimary,
     onBackground = TextPrimary,
     onSurface = TextPrimary,
-    onError = OnPrimary
+    onError = OnPrimary,
+    outline = border,
 )
 
 
