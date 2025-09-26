@@ -23,8 +23,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
@@ -36,10 +40,13 @@ import com.tanigo.app.ui.components.BrandHeader
 @Composable
 fun LoginScreen(navController: NavController){
     Surface(
-        modifier = Modifier.fillMaxSize().padding(horizontal = Dimens.screenHorizontal)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = Dimens.screenHorizontal)
     ){
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -47,17 +54,12 @@ fun LoginScreen(navController: NavController){
             Spacer(modifier = Modifier.height(60.dp))
             Spacer(modifier = Modifier.weight(0.4f))
 
-            BrandHeader()
+            BrandHeader() // Logo + Brand
 
             Spacer(modifier = Modifier.height(60.dp))
 
-            Text(
-                text = "Login",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.tertiary,
-            )
+            LoginForm(navController) // Form
 
-            LoginForm(navController)
             Spacer(modifier = Modifier.weight(1f))
             Spacer(modifier = Modifier.height(60.dp))
         }
@@ -67,73 +69,120 @@ fun LoginScreen(navController: NavController){
 
 @Composable
 fun LoginForm(navController: NavController){
-    var text by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var visible by remember { mutableStateOf(false) }
 
-    OutlinedTextField(
-        value = text,
-        onValueChange = { text = it },
-        label = { Text("Username") },
-        placeholder = { Text("Enter your username") },
-        singleLine = true,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = Dimens.spacingMedium),
-        shape = Shapes.medium
-    )
-    OutlinedTextField(
-        value = password,
-        onValueChange = { password = it },
-        label = { Text(text="Password",) },
-        singleLine = true,
-        visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
-        trailingIcon = {
-            val image = if (visible) Icons.Default.Visibility else Icons.Default.VisibilityOff
-            IconButton(onClick = { visible = !visible }, Modifier.padding(end=Dimens.spacingExtraSmall)) {
-                Icon(image, contentDescription = if (visible) "Hide" else "Show")
+    Box {
+        // 2. Buat lapisan bayangan (digambar pertama kali, jadi di belakang)
+        Box(
+            modifier = Modifier
+                // Membuat ukuran bayangan sama dengan ukuran konten
+                .matchParentSize()
+                // Geser bayangan ke kanan bawah
+                .offset(y = 4.dp)
+                // Beri warna hitam transparan dan bentuk yang sama
+                .background(
+                    color = Color.Black.copy(alpha = 0.08f),
+                    shape = Shapes.large
+                )
+        )
+
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .background(Color.White, shape = Shapes.large)
+                .padding(vertical = Dimens.spacingExtraLarge, horizontal = Dimens.spacingLarge),
+        ){
+            Text(
+                text = "Login",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.tertiary,
+            )
+
+            OutlinedTextField(
+                value = username,
+                onValueChange = { username = it },
+                label = { Text(text = "Username") },
+                placeholder = { Text("Enter your username") },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = Dimens.spacingMedium),
+                shape = Shapes.medium,
+                colors = OutlinedTextFieldDefaults.colors(
+                    cursorColor = MaterialTheme.colorScheme.onSurface, // Color of the cursor
+                    unfocusedPlaceholderColor = Color.Gray,
+                    focusedPlaceholderColor = Color.Gray,
+                )
+            )
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text(text="Password",) },
+                placeholder = { Text("Enter your password") },
+                singleLine = true,
+                visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
+                trailingIcon = {
+                    val image = if (visible) Icons.Default.Visibility else Icons.Default.VisibilityOff
+                    IconButton(onClick = { visible = !visible }, Modifier.padding(end=Dimens.spacingExtraSmall)) {
+                        Icon(imageVector = image, contentDescription = if (visible) "Hide" else "Show")
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = Dimens.spacingExtraSmall),
+                shape = Shapes.medium,
+                colors = OutlinedTextFieldDefaults.colors(
+                    cursorColor = MaterialTheme.colorScheme.onSurface, // Color of the cursor
+                    unfocusedPlaceholderColor = Color.Gray,
+                    focusedPlaceholderColor = Color.Gray,
+                )
+            )
+
+            Spacer(modifier = Modifier.height(Dimens.spacingLarge))
+
+            Button(
+                onClick = { /* TODO: handle login */ },
+                modifier = Modifier.fillMaxWidth()
+                    .height(Dimens.buttonHeightMedium),
+                shape = Shapes.medium
+            ) {
+                Text(text = "Login", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
             }
-        },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = Dimens.spacingExtraSmall),
-        shape = Shapes.medium
-    )
 
-    Spacer(modifier = Modifier.height(Dimens.spacingMedium))
 
-    Button(
-        onClick = { /* TODO: handle login */ },
-        modifier = Modifier.fillMaxWidth()
-            .height(Dimens.buttonHeightMedium),
-        shape = Shapes.medium
-    ) {
-        Text("Login")
+            Spacer(modifier = Modifier.height(Dimens.spacingSmall))
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Don't have an account? ",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+
+                Text(
+                    text = "Register",
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable {
+                        navController.navigate("register")
+                    }
+                )
+            }
+        }
+
     }
 
 
-    Spacer(modifier = Modifier.height(Dimens.spacingExtraSmall))
 
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = "Don't have an account? ",
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.tertiary
-        )
 
-        Text(
-            text = "Register",
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.secondary,
-            modifier = Modifier.clickable {
-                navController.navigate("register")
-            }
-        )
-    }
 
 }
 
