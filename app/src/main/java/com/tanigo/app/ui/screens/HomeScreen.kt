@@ -4,14 +4,17 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -86,41 +89,96 @@ fun HomeScreen(navController: NavController) {
 
 @Composable
 fun DrawerContent(onDestinationClicked: (route: String) -> Unit) {
-    Column(
+    Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        Text(
-            text = "Navigation",
-            style = MaterialTheme.typography.titleMedium
-        )
+            .width(200.dp)
+            .fillMaxHeight()
+            .background(MaterialTheme.colorScheme.background),
+        contentAlignment = Alignment.Center
+    ){
 
-        Text(
-            text = "Home",
+        // Main Container
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onDestinationClicked("home") }
-                .padding(8.dp)
-        )
+                .fillMaxSize()
+                .padding(top = Dimens.spacingMedium),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Container Profile
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.user_circle),
+                    contentDescription = "Profile",
+                    modifier = Modifier
+                        .size(120.dp)
+                        .clip(CircleShape)
+                )
 
-        Text(
-            text = "Profile",
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onDestinationClicked("profile") }
-                .padding(8.dp)
-        )
+                Text(
+                    text = "Mea",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
 
-        Text(
-            text = "Settings",
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onDestinationClicked("settings") }
-                .padding(8.dp)
-        )
+            // Container Navigasi
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(Dimens.spacingMedium),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Text(
+                    text = "Profile",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onDestinationClicked("home") }
+                        .padding(8.dp)
+                )
+
+                Text(
+                    text = "Account",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onDestinationClicked("home") }
+                        .padding(8.dp)
+                )
+
+                Text(
+                    text = "Settings",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onDestinationClicked("settings") }
+                        .padding(8.dp)
+                )
+
+                Text(
+                    text = "FAQ",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onDestinationClicked("settings") }
+                        .padding(8.dp)
+                )
+
+                Text(
+                    text = "Log Out",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onDestinationClicked("settings") }
+                        .padding(8.dp)
+                )
+            }
+        }
+
     }
+
+
+
+
+
 }
 
 
@@ -178,5 +236,12 @@ fun HomeScreenPreview(){
     }
 }
 
+@Preview (showBackground = true, showSystemUi = true)
+@Composable
+fun DrawerPreview(){
+    TaniGoTheme {
+        DrawerContent( {})
+    }
+}
 
 
