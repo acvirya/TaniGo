@@ -144,7 +144,7 @@ fun LoginForm(navController: NavController){
             Spacer(modifier = Modifier.height(Dimens.spacingLarge))
 
             Button(
-                onClick = { /* TODO: handle login */ },
+                onClick = { navController.navigate("home") },
                 modifier = Modifier.fillMaxWidth()
                     .height(Dimens.buttonHeightMedium),
                 shape = Shapes.medium
