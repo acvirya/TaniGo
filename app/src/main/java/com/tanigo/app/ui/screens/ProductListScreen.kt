@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.tanigo.app.model.Product
-import com.tanigo.app.ui.theme.Dimens
 import com.tanigo.app.viewmodel.ProductViewModel
+import com.tanigo.app.ui.theme.Dimens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,7 +23,11 @@ fun ProductListScreen(
     navController: NavController,
     productViewModel: ProductViewModel = viewModel()
 ) {
-    val products = productViewModel.getAllProducts()
+    var searchQuery by remember { mutableStateOf("") }
+
+    val products = productViewModel
+        .getAllProducts()
+        .filter { it.name.contains(searchQuery, ignoreCase = true) } // filter sesuai input
 
     Scaffold(
         topBar = {
@@ -36,12 +40,26 @@ fun ProductListScreen(
             )
         }
     ) { innerPadding ->
-        Surface(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
-            color = MaterialTheme.colorScheme.background
+                .padding(innerPadding)
+                .padding(horizontal = Dimens.screenHorizontal)
         ) {
+            // 🔍 Kolom Pencarian
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                placeholder = { Text("Cari produk...") },
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(Dimens.spacingSmall))
+
+            // Grid Produk
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 modifier = Modifier.fillMaxSize(),
@@ -62,6 +80,7 @@ fun ProductListScreen(
         }
     }
 }
+
 
 @Composable
 fun ProductGridItemCard(
