@@ -9,7 +9,7 @@ import androidx.navigation.NavController
 import com.tanigo.app.ui.theme.Dimens
 
 @Composable
-fun OrderStatusScreenExample(navController: NavController) {
+fun OrderScreenExample(navController: NavController) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -33,7 +33,7 @@ fun OrderStatusScreenExample(navController: NavController) {
                 onClick = { navController.popBackStack() },
                 modifier = Modifier
                     .fillMaxWidth(0.6f)
-                    .height(Dimens.buttonHeightMedium)
+                    .height(Dimens.heightMedium)
             ) {
                 Text(
                     text = "Go Back",

@@ -26,8 +26,8 @@ object Dimens {
     val cornerLarge = 24.dp
 
     // Button / Component sizes
-    val buttonHeightSmall = 36.dp
-    val buttonHeightMedium = 48.dp
-    val buttonHeightLarge = 56.dp
+    val heightSmall = 36.dp
+    val heightMedium = 48.dp
+    val heightLarge = 56.dp
 
 }

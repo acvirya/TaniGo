@@ -23,7 +23,6 @@ import androidx.navigation.compose.rememberNavController
 import com.tanigo.app.ui.components.BottomNavigationBar
 import com.tanigo.app.ui.components.NavigationDrawer
 
-import com.tanigo.app.ui.screens.HomeScreenExample
 import com.tanigo.app.ui.screens.CartScreenExample
 //import com.tanigo.app.ui.screens.NotificationScreen
 //import com.tanigo.app.ui.screens.OrderStatusScreen
@@ -31,6 +30,8 @@ import com.tanigo.app.ui.screens.LoginScreen
 import com.tanigo.app.ui.screens.RegisterScreen
 import com.tanigo.app.ui.screens.HomeScreen
 import com.tanigo.app.ui.screens.HomeTopAppBar
+import com.tanigo.app.ui.screens.NotificationScreenExample
+import com.tanigo.app.ui.screens.OrderScreenExample
 import kotlinx.coroutines.launch
 
 @Composable
@@ -73,11 +74,11 @@ fun NavGraph() {
                 ) {
                     composable("login") { LoginScreen(navController) }
                     composable("register") { RegisterScreen(navController) }
+
                     composable("home") { HomeScreen(navController) }
-//
-//                composable("cart") { CartScreen() }
-//                composable("notification") { NotificationScreenContent() }
-//                composable("orderStatus") { OrderStatusScreenContent() }
+                    composable("notification") { NotificationScreenExample(navController) }
+                    composable("cart") { CartScreenExample(navController) }
+                    composable("orders") { OrderScreenExample(navController) }
                 }
             }
 

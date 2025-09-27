@@ -36,7 +36,7 @@ fun CartScreenExample(navController: NavController) {
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.6f)
-                    .height(Dimens.buttonHeightMedium)
+                    .height(Dimens.heightMedium)
             ) {
                 Text(
                     text = "Go to Home",

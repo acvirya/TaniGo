@@ -48,7 +48,7 @@ object DummyRepository {
             name = "Pompa Air",
             price = 1500000.0,
             imageRes = R.drawable.pompa_air,
-            category = "Pompa Air",
+            category = "Pompa",
             description = "Pompa Air Description",
             rating = 4.7f,
             soldCount = 24,

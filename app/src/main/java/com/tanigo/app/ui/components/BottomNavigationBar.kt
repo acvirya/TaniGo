@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import com.tanigo.app.R
+import com.tanigo.app.ui.theme.GreenLight
 
 data class BottomNavItem(val route: String, val icon: Int, val title: String)
 
@@ -26,7 +27,7 @@ fun BottomNavigationBar(navController: NavController) {
         BottomNavItem("home", R.drawable.home, "Home"),
         BottomNavItem("notification", R.drawable.bell_ringing, "Notifications"),
         BottomNavItem("cart", R.drawable.shopping_cart, "Cart"),
-        BottomNavItem("orderStatus", R.drawable.clipboard_text, "Orders")
+        BottomNavItem("orders", R.drawable.clipboard_text, "Orders")
     )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -36,7 +37,8 @@ fun BottomNavigationBar(navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .height(100.dp),
-        tonalElevation = 3.dp
+        tonalElevation = 3.dp,
+        containerColor = Color.White
     ) {
         items.forEach { item ->
             val selected = currentRoute == item.route

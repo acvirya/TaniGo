@@ -33,7 +33,7 @@ fun NotificationScreenExample(navController: NavController) {
                 onClick = { navController.popBackStack() },
                 modifier = Modifier
                     .fillMaxWidth(0.6f)
-                    .height(Dimens.buttonHeightMedium)
+                    .height(Dimens.heightMedium)
             ) {
                 Text(
                     text = "Go Back",

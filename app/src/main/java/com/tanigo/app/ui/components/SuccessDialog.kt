@@ -5,14 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -32,7 +30,6 @@ import androidx.compose.ui.window.Dialog
 import com.tanigo.app.R
 import com.tanigo.app.ui.theme.Dimens
 import com.tanigo.app.ui.theme.Shapes
-import com.tanigo.app.ui.theme.Surface
 import com.tanigo.app.ui.theme.TaniGoTheme
 
 @Composable
@@ -85,7 +82,7 @@ fun SuccessDialog(
                     onClick = onDismiss,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(Dimens.buttonHeightMedium),
+                        .height(Dimens.heightMedium),
                     shape = Shapes.medium
                 ) {
                     Text(text = buttonLabel,

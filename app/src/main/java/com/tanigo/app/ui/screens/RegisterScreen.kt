@@ -10,12 +10,8 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.*
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.tanigo.app.R
 import androidx.compose.ui.unit.dp
 import com.tanigo.app.ui.theme.Dimens
 import com.tanigo.app.ui.theme.TaniGoTheme
@@ -24,13 +20,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.sp
 import com.tanigo.app.ui.theme.Shapes
 
 import com.tanigo.app.ui.components.BrandHeader
@@ -205,7 +197,7 @@ fun RegisterForm(navController: NavController){
             Button(
                 onClick = { showSuccessDialog = true },
                 modifier = Modifier.fillMaxWidth()
-                    .height(Dimens.buttonHeightMedium),
+                    .height(Dimens.heightMedium),
                 shape = Shapes.medium
             ) {
                 Text(
